@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('totalScore').textContent = 
         `${results.totalScore}/${totalPossibleScore}`;
     document.getElementById('questionsAttempted').textContent = 
-        `${results.answeredQuestions} of ${results.questions.length}`;
+        `answered ${results.answeredQuestions} of ${results.questions.length}`;
     document.getElementById('correctAnswers').textContent = results.correctAnswers;
 
     // Add score percentage
