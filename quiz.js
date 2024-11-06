@@ -171,15 +171,32 @@ function loadQuestion(index) {
 
 function resetTimerAnimation() {
     const timerCircle = document.getElementById('timerCircle');
-    timerCircle.style.animation = 'none';
-    timerCircle.offsetHeight; // Trigger reflow
-    timerCircle.style.animation = 'countdown 30s linear';
+    timerCircle.style.strokeDashoffset = '0';
+    
+    // Hitung total panjang circle
+    const circumference = 2 * Math.PI * 28; // 2πr where r=28
+    
+    // Update stroke-dasharray
+    timerCircle.style.strokeDasharray = `${circumference}`;
+    
+    // Animasi stroke-dashoffset
+    timerCircle.style.transition = 'stroke-dashoffset 1s linear';
+    setTimeout(() => {
+        timerCircle.style.strokeDashoffset = circumference;
+    }, 50);
 }
 
 function startTimer() {
+    resetTimerAnimation();
     timer = setInterval(() => {
         timeLeft--;
         document.getElementById('timer').textContent = timeLeft;
+        
+        // Update timer circle setiap detik
+        const timerCircle = document.getElementById('timerCircle');
+        const circumference = 2 * Math.PI * 28;
+        const offset = circumference * (timeLeft / 30);
+        timerCircle.style.strokeDashoffset = circumference - offset;
         
         if (timeLeft <= 0) {
             clearInterval(timer);
